@@ -27,14 +27,35 @@ Usuarios.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    correo: {
+    apellido: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        allowNull: false
+    },
+    idtipo_documento: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     },
     dni: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    telefono: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    usuario: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull:true,
+    },
+    correo: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
     }
 }, {
     sequelize,
