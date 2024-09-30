@@ -7,27 +7,22 @@ const { create } = require('express-handlebars');
 const sequelize = require('./config/db');
 //sequelize.sync({ force: false }) // Cambia a `true` solo si deseas eliminar las tablas existentes y recrearlas
 
+const router = require('./routes/index');
+const login = require('./routes/routeLogin');
+const Helpers = require('./helpers/helpers');
+
+
 const app = express();
 
 
 app.use(express.json());
 
+
 //ZONA DE CONFIGURACION DEL SISTEMA
 const hbs = create({
 	extname: ".hbs",
 	partialsDir: ["views/layouts/section", "views/components"],
-	helpers: {
-		block: function (name) {
-			const blocks = this._blocks || (this._blocks = {});
-			const content = blocks[name] || [];
-			return content.join('\n');
-		},
-		contentFor: function (name, options) {
-			const blocks = this._blocks || (this._blocks = {});
-			blocks[name] = blocks[name] || [];
-			blocks[name].push(options.fn(this));
-		}
-	}
+	helpers: Helpers
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -38,13 +33,12 @@ app.set("views", "./views");
 app.use(express.static(__dirname + "/views"));
 app.use(express.static(__dirname + "/views/img"));
 app.use(express.static(__dirname + '/public'));
-app.use(express.static('node_modules'));
+app.use(express.static(__dirname + '/node_modules'));
 //FIN ZONA CONFIGURACION DEL SISTEMA
 
 // zona de rutas
 
-const router = require('./routes/index');
-const login = require('./routes/routeLogin');
+
 
 
 app.use('/', router);
@@ -60,7 +54,7 @@ app.use('/login', login);
 // 	res.status(500).send('Something broke!')
 // })
 
-const PORT = 4000;
+const PORT = 3000;
 app.listen(PORT, () => {
 	console.log(`Corriendo en el puerto ${PORT}`)
 })

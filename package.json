@@ -15,6 +15,7 @@
     "axios": "^1.7.7",
     "connect-flash": "^0.1.1",
     "cors": "^2.8.5",
+    "ember-truth-helpers": "^4.0.3",
     "express": "^4.21.0",
     "express-handlebars": "^8.0.1",
     "express-session": "^1.18.0",
