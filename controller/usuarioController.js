@@ -1,5 +1,7 @@
-const Usuarios = require("../models/Usuario");
-const { getTipoDocumento } = require("../models/Generales");
+import Usuarios from "../models/Usuario.js";
+
+import { getTipoDocumento } from "../models/Generales.js";
+
 
 
 const lista_tipo_documento = async () => {
@@ -96,4 +98,4 @@ const usuarioController = {
     }
 }
 
-module.exports = usuarioController;
+export default usuarioController;

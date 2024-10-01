@@ -1,5 +1,4 @@
-const { Sequelize } = require('sequelize');
-
+import Sequelize from 'sequelize';
 
 // Crear una instancia de Sequelize y conectarse a una base de datos SQLite
 const sequelize = new Sequelize({
@@ -8,4 +7,4 @@ const sequelize = new Sequelize({
 	logging: console.log, // Habilita el logging de consultas
 });
 
-module.exports = sequelize;
+export default sequelize;

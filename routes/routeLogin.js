@@ -1,7 +1,6 @@
-const express = require("express");
+import express from 'express'
 
-const usuarioController = require("../controller/usuarioController");
-
+import usuarioController from '../controller/usuarioController.js';
 
 const login = express.Router()
 
@@ -16,4 +15,4 @@ login.post("/actualizar-usuario/:id", usuarioController.actualizarUsuario);
 
 login.get("/eliminar-usuario/:id", usuarioController.eliminarUsuario)
 
-module.exports = login;
+export default login;

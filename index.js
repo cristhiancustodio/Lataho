@@ -1,15 +1,16 @@
-const express = require('express')
-const path = require('path');
+import express from 'express';
 
+import { create } from 'express-handlebars';
 
-//MOTOR DE HTML
-const { create } = require('express-handlebars');
-const sequelize = require('./config/db');
-//sequelize.sync({ force: false }) // Cambia a `true` solo si deseas eliminar las tablas existentes y recrearlas
+import router from './routes/index.js';
+import login from './routes/routeLogin.js';
 
-const router = require('./routes/index');
-const login = require('./routes/routeLogin');
-const Helpers = require('./helpers/helpers');
+import Helpers from './helpers/helpers.js';
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 
 const app = express();

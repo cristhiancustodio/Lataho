@@ -1,14 +1,17 @@
-const express = require('express');
+import express from 'express'
+
 const router = express.Router();
 
 
-// Ruta principal
 
+// Ruta principal
+router.get('/autenticacion', (req, res) => {
+    res.render('login/autenticacion');
+
+});
 
 // Otra ruta
 
 
 
-
-
-module.exports = router;
+export default router;

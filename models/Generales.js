@@ -1,5 +1,6 @@
-const { QueryTypes } = require("sequelize");
-const sequelize = require("../config/db.js")
+import QueryTypes from "sequelize";
+import sequelize from "../config/db.js";
+
 
 async function getTipoDocumento(){
     try {
@@ -13,6 +14,6 @@ async function getTipoDocumento(){
     }
 }
 
-module.exports = {
+export{
     getTipoDocumento,
 }

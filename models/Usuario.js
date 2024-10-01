@@ -1,7 +1,6 @@
-const { DataTypes, Model, Op} = require('sequelize')
 
-const sequelize = require("../config/db.js")
-
+import { DataTypes, Model, Op } from 'sequelize';
+import sequelize from '../config/db.js';
 class Usuarios extends Model {
     static async getUsuarios() {
         return await this.findAll({
@@ -64,5 +63,4 @@ Usuarios.init({
     timestamps: false // Desactiva la creación de campos de tiempo
 });
 
-
-module.exports = Usuarios;
+export default Usuarios;
