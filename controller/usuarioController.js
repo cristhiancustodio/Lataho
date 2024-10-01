@@ -3,22 +3,18 @@ import Usuarios from "../models/Usuario.js";
 import { getTipoDocumento } from "../models/Generales.js";
 
 
-
-const lista_tipo_documento = async () => {
-    return await getTipoDocumento();
-}
 const usuarioController = {
 
     async index(req, res) {
         return res.render("login/index", {
-            lista_tipo_documento: await lista_tipo_documento(),
+            lista_tipo_documento: await getTipoDocumento(),
         });
     },
-    async verUsuario(req, res) {
+    async verUsuario(req, res) {        
         let usuario = await Usuarios.findByPk(req.params.id || 0);
 
         return res.render("login/index", {
-            lista_tipo_documento: await lista_tipo_documento(),
+            lista_tipo_documento: await getTipoDocumento(),
             usuario: usuario ? usuario.toJSON() : null,
         });
     },

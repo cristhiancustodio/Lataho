@@ -9,8 +9,7 @@ const Helpers = {
         blocks[name] = blocks[name] || [];
         blocks[name].push(options.fn(this));
     },
-    condIf : function(valor1, valor2){
-        console.log(valor1, valor2);			
+    condIf : function(valor1, valor2){		
         if(valor1 == valor2){
             return true;
         }
