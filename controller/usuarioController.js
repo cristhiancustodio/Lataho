@@ -10,6 +10,11 @@ const usuarioController = {
             lista_tipo_documento: await getTipoDocumento(),
         });
     },
+    async detalle(req, res){
+
+        const resultado = await Usuarios.findAll();
+        return res.json(resultado);
+    },
     async verUsuario(req, res) {        
         let usuario = await Usuarios.findByPk(req.params.id || 0);
 
