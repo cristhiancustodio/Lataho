@@ -1,9 +1,9 @@
-const Prueba = {
+const Segundo = {
 
     suma(){
         return alert('Suma');
     }
 }
 
-export default Prueba;
+export default Segundo;
 
