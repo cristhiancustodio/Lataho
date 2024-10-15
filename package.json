@@ -9,7 +9,7 @@
     "dev": "nodemon index.js",
     "vite": "vite",
     "start": "webpack serve",
-    "devi": "concurrently \"nodemon index.js\" \"webpack serve\""
+    "devi": "concurrently \"nodemon index.js\" \"webpack -w\""
   },
   "author": "",
   "license": "ISC",
