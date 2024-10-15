@@ -1,9 +1,0 @@
-const Prueba = {
-
-    suma(){
-        return alert('Suma');
-    }
-}
-
-export default Prueba;
-
