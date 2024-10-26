@@ -1,10 +1,46 @@
 {
+	//ESTOS SON TODOS LOS SNIPPETS
+	// ds-nuevoestilo
+	// ds-btn-buscar
+	// php-posicion
+	// script-database
+	// js-database
+	// php-database
+	// php-columna-datagrid
+	// php-datagrid-completo
+	// script-messagebox
+	// js-messagebox
+	// php-lightbox
+	// php-lightbox-completo
+	// script-lightbox
+	// js-ligthbox
+	// script-clienteproveedor
+	// js-clienteproveedor
+	// php-calendario
+	// php-tooltip
+	// php-tooltip-new-feature
+	// php-tabbar
+	// php-notificacion-web
+	// php-dropdown-searchable
+	// sql-permisos
+	// php-permiso
+	// php-accion-usuario
+	// php-envio-correo 
 	"ds-nuevoestilo": {
 		"prefix": "ds-nuevoestilo",
 		"body": [
 			"<link type=\"text/css\" rel=\"stylesheet\" href=\"<?=$$POSICION?>css/nuevoestilo.css\">",
 		],
 		"description": "EL nuevo estilo para formulario"
+	},
+	"ds-btn-buscar": {
+		"prefix": "ds-btn-buscar",
+		"body": [
+			"<button type=\"button\" id=\"btnBuscar\" style=\"width:100px;height:50px\" class=\"textonegro\">",
+			"<img src=\"<?=$$POSICION?>img/ico/v2/btn_buscar.png\" style=\"vertical-align:middle\" alt=\"\"> Buscar",
+			"</button>"
+		],
+		"description": "Snippet para crear un botón con el id 'btnBuscar' y un ícono de buscar"
 	},
 	"php-posicion": {
 		"prefix": "php-posicion",
@@ -14,6 +50,164 @@
 			"}"
 		],
 		"description": "Verifica la posición del archivo conexion.php"
+	},
+	"script-database": {
+		"prefix": "script-database",
+		"body": [
+			"<script type=\"text/javascript\" src=\"<?=$$POSICION;?>/componente/database/class.php\"></script>",
+		],
+		"description": "script database"
+	},
+	"js-database": {
+		"prefix": "js-database",
+		"body": [
+			"var BD = new BASE();",
+			"BD.commandFile = \"\";",
+			"var resultado = BD.send(\"cmd=\");"
+		],
+		"description": "Inicializa la base de datos y envía un comando"
+	},
+	"php-database": {
+		"prefix": "php-database",
+		"body": [
+			"$$sql = \"SELECT * FROM public.empresa LIMIT 1\";",
+			"$$param = array();",
+			"$$result = $$Base->query_params($$Base->conn, $$sql, $$param);",
+			"$$_error = $$Base->last_error($$Base->conn);",
+			"if ($$_error != \"\"){",
+			"    die ($$_error);",
+			"}",
+			"$row = $$Base->to_object($$result);"
+		],
+		"description": "Snippet de PHP para consultas en command.php"
+	},
+	"php-columna-datagrid": {
+		"prefix": "php-columna-datagrid",
+		"body": [
+			"class ${1:Campo} extends DATAGRID_COL {",
+			"    public function ${2:Campo}() {",
+			"        $$this->head = \"$4\";",
+			"        $$this->width = \"$5%\";",
+			"        $$this->orderby = \"$6\";",
+			"        $$this->filter = \"$7\";",
+			"        $$this->type = \"$8\";",
+			"    }",
+			"",
+			"    public function getValue() {",
+			"        return (\"<div align='center'>\" . $$this->row['campo'] . \"</div>\");",
+			"    }",
+			"}"
+		],
+		"description": "Snippet PHP para crear columna en datagrid"
+	},
+	"php-datagrid-completo": {
+		"prefix": "php-datagrid-completo",
+		"body": [
+			"<?php",
+			"require ${1:$$POSICION} . \"componente/datagrid3/class.php\";",
+			"",
+			"$$DG = new DATAGRID(\"cesion\");",
+			"$$DG->onInitialize = \"DataGrid_onInitialize\";",
+			"$$DG->onCreate     = \"DataGrid_onCreate\";",
+			"$$DG->sqlLimit    = 20;",
+			"$$DG->Nav = true;",
+			"$$DG->Foot = true;",
+			"$$DG->sqlQuery    = \"SELECT cp.idclienteproveedor,cp.razonsocial,cp.rut FROM public.clienteproveedor cp LIMIT 30\";",
+			"",
+			"class Campo extends DATAGRID_COL",
+			"{",
+			"    public function Campo()",
+			"    {",
+			"        $$this->head = \"\";",
+			"        $$this->width = \"%\";",
+			"        $$this->orderby = \"\";",
+			"        $$this->filter = \"\";",
+			"        $$this->type = \"varchar\";",
+			"    }",
+			"    public function getValue()",
+			"    {",
+			"        return (\"<center>\" . $$this->row[\"razonsocial\"] . \"</center>\");",
+			"    }",
+			"}",
+			"",
+			"$$DG->addCol(new Campo());",
+			"",
+			"if (($$_SERVER['HTTP_DG3'] == $$DG->id) || ($$_SERVER['HTTP_USER_AGENT'] == $$DG->id)) {",
+			"    $$DG->reload();",
+			"}",
+			"?>",
+			"<--SIEMPRE ANTES DE COLOCAR NUETRO DATAGRID EN EL HTML-->",
+			"<script type=\"text/javascript\">",
+			"    function DataGrid_onInitialize() {",
+			"        this.getFilter = function() {",
+			"            let filter = \"&filter=\";",
+			"            let rutfiltro = document.getElementById(\"rut\").value;",
+			"            if (rutfiltro != \"\") {",
+			"                filter += \"[rut(#)\" + escape(rutfiltro) + \"]\";",
+			"            }",
+			"            return (filter);",
+			"        }",
+			"    }",
+			"    function reziseDataGrid(dg) {",
+			"        document.body.style.overflowX = \"hidden\";",
+			"    }",
+			"    function DataGrid_onCreate() {",
+			"        reziseDataGrid(this);",
+			"        this.FILTER.style.display = \"none\";",
+			"        this.reload();",
+			"    }",
+			"</script>",
+			"",
+			"<!-- USAR BOTON PARA BUSCAR -->",
+			"<button type=\"button\" id=\"btnBuscar\" style=\"width:100px;height:50px\" class=\"textonegro\">",
+			"    <img src=\"${2:$$$POSICION}img/ico/v2/btn_buscar.png\" style=\"vertical-align:middle\" alt=\"\"> Buscar",
+			"</button>",
+			"",
+			"<!-- CODIGO PARA MOSTRAR LA TABLA -->",
+			"<div>",
+			"    <?php $$DG->Create(); ?>",
+			"</div>",
+			"",
+			"<script>",
+			"    Event.observe(\"btnBuscar\", \"click\", function(event) {",
+			"        cesion.reload();",
+			"    });",
+			"</script>"
+		],
+		"description": "Snippet para crear un datagrid completo con PHP y JavaScript"
+	},
+	"script-messagebox": {
+		"prefix": "script-messagebox",
+		"body": [
+			"<script type=\"text/javascript\" src=\"<?=$$POSICION;?>componente/messagebox/class.php?v=1\"></script>",
+		],
+		"description": "script messagebox"
+	},
+	"js-messagebox": {
+		"prefix": "js-messagebox",
+		"body": [
+			"var MSGBOX = {",
+			"    ventana: typeof IU_MSGBOX,",
+			"    initialize: function() {",
+			"        this.ventana = new IU_MSGBOX();",
+			"    },",
+			"    Abrir: function(conf) {",
+			"        this.ventana.titulo = conf.titulo;",
+			"        var texto = conf.texto || '';",
+			"        this.ventana.texto = '<center>' + texto + '</center>';",
+			"        this.ventana.botonera = conf.botonera || 1;",
+			"        this.ventana.conCerrar = (conf.conCerrar != undefined) ? conf.conCerrar : this.ventana.conCerrar;",
+			"        this.ventana.fnretorno = conf.fnretorno || 'opcion';",
+			"        this.ventana.url = '<?=$$POSICION?>';",
+			"        this.ventana.top = conf.top || '25%';",
+			"        this.ventana.objeto = conf.objeto || {};",
+			"        this.ventana.Messagebox();",
+			"        this.ventana.zzIndex = 2;",
+			"    },",
+			"};",
+			"MSGBOX.initialize();"
+		],
+		"description": "Manejador para la ventana de mensaje"
 	},
 	"php-lightbox": {
 		"prefix": "php-lightbox",
@@ -138,55 +332,6 @@
 		],
 		"description": "Manejador para la ventana de mensaje"
 	},
-	"script-database": {
-		"prefix": "script-database",
-		"body": [
-			"<script type=\"text/javascript\" src=\"<?=$$POSICION;?>/componente/database/class.php\"></script>",
-		],
-		"description": "script database"
-	},
-	"js-database": {
-		"prefix": "js-database",
-		"body": [
-			"var BD = new BASE();",
-			"BD.commandFile = \"\";",
-			"var resultado = BD.send(\"cmd=\");"
-		],
-		"description": "Inicializa la base de datos y envía un comando"
-	},
-	"script-messagebox": {
-		"prefix": "script-messagebox",
-		"body": [
-			"<script type=\"text/javascript\" src=\"<?=$$POSICION;?>componente/messagebox/class.php?v=1\"></script>",
-		],
-		"description": "script messagebox"
-	},
-	"js-messagebox": {
-		"prefix": "js-messagebox",
-		"body": [
-			"var MSGBOX = {",
-			"    ventana: typeof IU_MSGBOX,",
-			"    initialize: function() {",
-			"        this.ventana = new IU_MSGBOX();",
-			"    },",
-			"    Abrir: function(conf) {",
-			"        this.ventana.titulo = conf.titulo;",
-			"        var texto = conf.texto || '';",
-			"        this.ventana.texto = '<center>' + texto + '</center>';",
-			"        this.ventana.botonera = conf.botonera || 1;",
-			"        this.ventana.conCerrar = (conf.conCerrar != undefined) ? conf.conCerrar : this.ventana.conCerrar;",
-			"        this.ventana.fnretorno = conf.fnretorno || 'opcion';",
-			"        this.ventana.url = '<?=$POSICION?>';",
-			"        this.ventana.top = conf.top || '25%';",
-			"        this.ventana.objeto = conf.objeto || {};",
-			"        this.ventana.Messagebox();",
-			"        this.ventana.zzIndex = 2;",
-			"    },",
-			"};",
-			"MSGBOX.initialize();"
-		],
-		"description": "Manejador para la ventana de mensaje"
-	},
 	"script-clienteproveedor": {
 		"prefix": "script-clienteproveedor",
 		"body": [
@@ -231,23 +376,215 @@
 		],
 		"description": "Snippet PHP para componente de calendario"
 	},
-	"php-columna-datagrid": {
-		"prefix": "php-columna-datagrid",
+	"php-tooltip": {
+		"prefix": "php-tooltip",
 		"body": [
-			"class ${1:Campo} extends DATAGRID_COL {",
-			"    public function ${2:Campo}() {",
-			"        $$this->head = \"$4\";",
-			"        $$this->width = \"$5%\";",
-			"        $$this->orderby = \"$6\";",
-			"        $$this->filter = \"$7\";",
-			"        $$this->type = \"$8\";",
-			"    }",
+			"<?php",
+			"require_once($$POSICION.\"componente/tooltip/class.php\");",
+			"$$tool = new TOOLTIP();",
+			"$$header_adicional_post .= '",
+			"    <script type=\"text/javascript\" src=\"'.$$POSICION.'js/util.js?v=1\"></script>'",
+			"    .TOOLTIP::hojaestilo();",
+			"?>",
+			"<?= $$tool->elementoConTooltip(\"<img src='\".$$POSICION.\"img/ico/info_blanco.png' id='elemento4' alt='Informacion'>\", \"Todo se ve bien aqui\"); ?>"
+		],
+		"description": "Snippet para crear un elemento con tooltip usando PHP"
+	},
+	"php-tooltip-new-feature": {
+		"prefix": "php-tooltip-new-feature",
+		"body": [
+			"<?php",
+			"require_once($$POSICION.\"componente/tooltipnewfeature/class.php\");",
 			"",
-			"    public function getValue() {",
-			"        return (\"<div align='center'>\" . $$this->row['campo'] . \"</div>\");",
+			"$$header_adicional_post .= '</script> <script type=\"text/javascript\" src=\"'.$$POSICION.'js/util.js?v=1\"></script>';",
+			"",
+			"$$tooltip = new TooltipNewFeature;",
+			"// Definir los array de cada tooltip",
+			"$$contenido_tool_1 = '<div style=\"float:right\"><img src=\"'.$$POSICION.'img/ico/v2/btn_cerrar.png\" style=\"width: 51%; cursor:pointer;\"></div>",
+			"<p class=\"texto\" style=\"font-weight: bold;\">¡NUEVA FUNCIÓN!</p>',",
+			"<p class=\"texto\">Ahora podrá definir si desea visualizar o no las pestañas Datos de clientes, Descuentos y Recargos al emitir.</p>';",
+			"",
+			"$$tooltip1 = array(",
+			"    'elemento'         => \"<input type='hidden' id='elemento4'>\",",
+			"    'contenido'        => $$contenido_tool_1,",
+			"    'unavez'           => false,",
+			"    'id'               => 'tool1',",
+			"    'siguiente'        => 'tool2',",
+			"    'fechavencimiento' => '10-06-2023'",
+			");",
+			"",
+			"TooltipNewFeature::nextTooltip();",
+			"?>",
+			"",
+			"<?= $$tooltip->getTooltip($$tooltip1); ?>",
+			"",
+			"<script>",
+			"    firstTooltip(\"tool1\");",
+			"</script>"
+		],
+		"description": "Snippet para implementar un tooltip con la nueva funcionalidad en PHP"
+	},
+	"php-tabbar": {
+		"prefix": "php-tabbar",
+		"body": [
+			"<?php",
+			"$$header_adicional = '<link rel=\"STYLESHEET\" type=\"text/css\" href=\"' . $$POSICION . 'js/comp/css/dhtmlXTabbar.css\">",
+			"    <script type=\"text/javascript\" src=\"' . $$POSICION . 'js/comp/dhtmlXCommon.js\"></script>",
+			"    <script type=\"text/javascript\" src=\"' . $$POSICION . 'js/comp/dhtmlXTabbar.js\"></script>';",
+			"?>",
+			"<div id=\"a_tabbar\" style=\"width:100%;height:360px;overflow:hidden;margin:0\"></div>",
+			"<div id=\"PARAMETROS_1\" style=\"margin:10px;width:95%\" class=\"texto\"></div>",
+			"",
+			"<script type=\"text/javascript\">",
+			"    if (typeof(tabbar) == \"undefined\") {",
+			"        tabbar = new dhtmlXTabBar(\"a_tabbar\", \"top\");",
+			"        tabbar.setImagePath(\"<?= $$POSICION; ?>js/comp/dhtmlxTabbar/imgs/\");",
+			"        tabbar.setSkinColors(\"#FCFBFC\", \"#F4F3EE\", \"#FCFBFC\");",
+			"        tabbar.addTab(\"tab_1\", \"Desis\", \"220px\");",
+			"        tabbar.setContent(\"tab_1\", \"PARAMETROS_1\");",
 			"    }",
+			"    tabbar.setTabActive(\"tab_1\");",
+			"</script>"
+		],
+		"description": "Snippet para crear un dhtmlXTabBar en PHP"
+	},
+	"php-notificacion-web": {
+		"prefix": "php-notificacion-web",
+		"body": [
+			"<?php ",
+			"require $$POSICION.\"componente/notificacionweb/NotificacionWeb.php\";// Importamos componente",
+			"",
+			"$$sistema = 'nombreSistema';",
+			"$$usuario = $$_SESSION['ss_user'];",
+			"$$mensaje = \"Se te ha enviado una Notificacion\";",
+			"NotificacionWeb::notificacionDirecta($$sistema, array($$usuario), $$mensaje, \"\");",
+			"",
+			"/* Notificacion para Documento */",
+			"$$folio = 123456;",
+			"$$tipodte = 33;",
+			"NotificacionWeb::notificacionDocumento($$sistema, $$folio, $$tipodte);",
+			"?>"
+		],
+		"description": "Snippet para enviar notificaciones web directas y por documento en PHP"
+	},
+	"php-dropdown-searchable": {
+		"prefix": "php-dropdown-searchable",
+		"body": [
+			"<?php",
+			"$$header_adicional_post = '",
+			"    <script type=\"text/javascript\" src=\"' . $$POSICION . 'js/xml_valorflexible.js\"></script>",
+			"    <link rel=\"stylesheet\" href=\"' . $$POSICION . 'componente/DropdownSearchable/styles.css\" media=\"screen,projection\" type=\"text/css\">",
+			"    <script type=\"text/javascript\" src=\"' . $$POSICION . 'componente/DropdownSearchable/class.js?1.0.1\"></script>",
+			"';",
+			"?>",
+			"<script>",
+			"    xml_valorflexible('', 'idcomuna', false, 'comuna', 'nombre', '', '', '', false, \"../../\");",
+			"    let POSICION = '<?php echo  $$POSICION ?>';",
+			"    let dds = new DDS();",
+			"    dds.elementoSelect = document.getElementById(\"idcomuna\");",
+			"    dds.POSICION = POSICION;",
+			"    dds.anchodiv = 228;",
+			"    dds.crear();",
+			"</script>"
+		],
+		"description": "Snippet para implementar un Dropdown Searchable en PHP"
+	},
+	"sql-permisos": {
+		"prefix": "sql-permisos",
+		"body": [
+			"INSERT INTO public.recurso",
+			"(idrecurso, tipo, nombre, indice, descripcion, linkpagina,",
+			"idrecursopadre, idrecursomaestro, orden, idioma, seccion, botonera,",
+			"tabla, pos, seccionmantenedor)",
+			"VALUES (",
+			"nextval('recurso_idrecurso_seq'),",
+			"'MANT',",
+			"'form/cotiza/traine.php',",
+			"NULL,",
+			"'PRUEBA',",
+			"'form/cotiza/traine.php',",
+			"(SELECT idrecurso FROM public.recurso WHERE descripcion =",
+			"'Cotizacion'),",
+			"1,",
+			"NULL,",
+			"'ESP',",
+			"'VENTA',",
+			"NULL,",
+			"NULL,",
+			"NULL,",
+			"'Maestros'",
+			");"
+		],
+		"description": "Snippet para insertar permisos en la tabla recurso"
+	},
+	"php-permiso": {
+		"prefix": "php-permiso",
+		"body": [
+			"<?php",
+			"require $$POSICION . \"componente/permiso/class.php\";",
+			"$$Botonera = new Permiso(\"form/maestros/cajachica/\", \"Nuevo()\", \"Modificar()\", \"Eliminar()\", \"Excel()\", \"Volver()\", \"Guardar()\");",
+			"?>",
+			"<?= $$Botonera->imprimirBotones(); ?>"
+		],
+		"description": "Snippet para implementar botones de permisos en PHP"
+	},
+	"php-accion-usuario": {
+		"prefix": "php-accion-usuario",
+		"body": [
+			"<?php",
+			"require($$POSICION . \"include/class/class.Acciones.php\");",
+			"$$cAcciones = new Acciones;",
+			"/*",
+			"@parametro 1: idusuario",
+			"@parametro 2: Link de pagina del recurso",
+			"@parametro 3: Nombre del recurso",
+			"*/",
+			"$$cAcciones->getAcciones($$_SESSION[\"ss_user\"], \"form/cotiza/lista.php\", \"form/cotiza/\");",
+			"",
+			"$$accion_DUPLICA = $$cAcciones->accionHabilitada(\"COT_DUPLICAR\", \"javascript:permitido()\", \"javascript:Nopermitido()\");",
+			"?>",
+			"<button onclick='<?= $$accion_DUPLICA ?>'>Duplicar</button>",
+			"<script>",
+			"function permitido() {",
+			"    // Código para la acción permitida",
+			"}",
+			"</script>"
+		],
+		"description": "Snippet para manejar acciones de usuario en PHP"
+	},
+	"php-envio-correo": {
+		"prefix": "php-envio-correo",
+		"body": [
+			"<?php",
+			"require_once $$POSICION . \"componente/enviomail/envio.php\";",
+			"try {",
+			"    $$mail = new envioMail($$POSICION);",
+			"",
+			"    $$mail->definirHeader('tipo.html');",
+			"    $$mail->definirFooter('tipo.html');",
+			"    $$mail->definirBody('body.html');",
+			"    $$mail->setReceptorOculto('programador@desis.cl');",
+			"",
+			"    $$mail->setLabelEmisor('Nick.cl ');",
+			"    $$mail->setEmisor('soporte@facturacion.cl');",
+			"    $$mail->setReceptor('programador@desis.cl');",
+			"    $$mail->setAsunto('Probando asunto');",
+			"    $$datosEnvio = array(",
+			"        '[CAMPO]' => utf8_encode('VALOR'),",
+			"    );",
+			"    $$mail->reemplazar(json_encode($$datosEnvio));",
+			"",
+			"    $$stateSend = $$mail->enviar();",
+			"",
+			"    if ($$stateSend === true) {",
+			"        echo 'envio exitoso';",
+			"    } else {",
+			"        echo 'el envio fue un fracaso ' . $$stateSend;",
+			"    }",
+			"} catch (Exception $$e) {",
+			"    print_r($$e);",
 			"}"
 		],
-		"description": "Snippet PHP para crear columna en datagrid"
+		"description": "Snippet para enviar correos en PHP"
 	}
 }
